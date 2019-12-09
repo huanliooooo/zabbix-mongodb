@@ -4,8 +4,12 @@
 # Description:          A script to send MongoDB stats to zabbix server by using zabbix sender
 # Requires:             Zabbix Sender, zabbix-mongodb.py
 
+CDIR="`dirname "$0"`"
+HOME_PATH=`(cd "$CDIR"/ ; pwd)`
+
+
 get_MongoDB_metrics(){
-python3 zabbix-mongodb.py
+ eval "python3 $HOME_PATH/zabbix-mongodb.py"
 }
 
 result=$(get_MongoDB_metrics | /usr/bin/zabbix_sender -z $1 -s "$2"  -i - 2>&1)
