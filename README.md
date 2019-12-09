@@ -1,17 +1,37 @@
-# Zabbix-MongoDB
-A Zabbix plugin for monitoring MongoDB.
+# Technology
+
+1. Python3, python3-pip, pymongo
+2. Zabbix Agent (+ zabbix_sender)
+3. Mongodb
 
 # Installation
+
 1. Import the mongodb template to zabbix and link it to the zabbix mongodb host.
-2. Copy the scripts to mongodb host in /usr/local/bin .
-3. Copy mongodb zabbix agent configuration to /etc/zabbix-agent/zabbix_agentd.d and restart zabbix agent.
+2. Clone project:
+
+```
+git clone https://github.com/huanliooooo/zabbix-mongodb.git
+```
+
+2. Config HostName and Server in /bin/zabbix.conf
+3. Test script:
+
+```
+./bin/mongodb-stats.sh $SERVER $HOST_NAME
+```
+
+4. Cronjob every 30 seconds
+
+```
+./bin/cronjob.sh
+```
 
 Note:
-- Zabbix sender uses zabbix agent configuration to send the metrics, please check the hostname is set in the zabbix agent config /etc/zabbix/zabbix_agentd.conf, by default the hostname may be commented out.
 
 The following metrics are collected on mongodb version 3.0 by using python mongodb client, and then sent by zabbix sender.
 
 **Server Stats**
+
 - mongodb.ismaster
 - mongodb.version
 - mongodb.storageEngine
@@ -51,6 +71,7 @@ The following metrics are collected on mongodb version 3.0 by using python mongo
 - mongodb.globalLock.activeClients.readers
 
 **DB Stats**
+
 - mongodb.stats.storageSize[db]
 - mongodb.stats.ok[db]
 - mongodb.stats.avgObjSize[db]
@@ -64,4 +85,5 @@ The following metrics are collected on mongodb version 3.0 by using python mongo
 - mongodb.stats.nsSizeMB[db]
 
 # License
+
 [MIT](/LICENSE.md)
