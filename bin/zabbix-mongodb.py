@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
-Date: 03/01/2017
-Author: Long Chen
+Date: 09/12/2019
 Description: A script to get MongoDB metrics
 Requires: MongoClient in python
 """
