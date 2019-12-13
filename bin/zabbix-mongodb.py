@@ -9,8 +9,8 @@ from calendar import timegm
 from time import gmtime
 
 from pymongo import MongoClient, errors
-import sys from exit
 
+import sys
 import json
 
 
