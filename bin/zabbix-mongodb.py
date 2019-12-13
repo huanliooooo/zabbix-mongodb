@@ -9,16 +9,18 @@ from calendar import timegm
 from time import gmtime
 
 from pymongo import MongoClient, errors
-from sys import exit
+import sys from exit
 
 import json
+
 
 class MongoDB(object):
     """main script class"""
     # pylint: disable=too-many-instance-attributes
+
     def __init__(self):
-        self.mongo_host = "127.0.0.1"
-        self.mongo_port = 27017
+        self.mongo_host = "127.0.0.1" if sys.argv[1] == None else sys.argv[1]
+        self.mongo_port = 27017 if sys.argv[2] == None else sys.argv[2]
         self.mongo_db = ["admin", ]
         self.mongo_user = None
         self.mongo_password = None
@@ -126,7 +128,6 @@ class MongoDB(object):
             oplog = int(((str(op_last_st).split('('))[1].split(','))[0])
             self.add_metrics('mongodb.oplog-sync', (current_time - oplog))
 
-
     def get_maintenance(self):
         """get replica set maintenance info"""
         if self.__conn is None:
@@ -152,10 +153,11 @@ class MongoDB(object):
             self.add_metrics('mongodb.priority', priority)
             self.add_metrics('mongodb.hidden', hidden)
         except errors.PyMongoError:
-            print ('Error while fetching replica set configuration.'
-                   'Not a member of replica set?')
+            print('Error while fetching replica set configuration.'
+                  'Not a member of replica set?')
         except UnboundLocalError:
-            print ('Cannot use this mongo host: must be one of ' + ','.join(connstrings))
+            print('Cannot use this mongo host: must be one of ' +
+                  ','.join(connstrings))
             exit(1)
 
     def get_server_status_metrics(self):
@@ -195,7 +197,7 @@ class MongoDB(object):
         self.add_metrics('mongodb.page.faults',
                          ss['extra_info']['page_faults'])
 
-        #wired tiger
+        # wired tiger
         if ss['storageEngine']['name'] == 'wiredTiger':
             self.add_metrics('mongodb.used-cache',
                              ss['wiredTiger']['cache']
@@ -232,10 +234,12 @@ class MongoDB(object):
                              'nsSizeMB']:
                         self.add_metrics('mongodb.stats.' + k +
                                          '[' + mongo_db + ']', int(v))
+
     def close(self):
         """close connection to mongo"""
         if self.__conn is not None:
             self.__conn.close()
+
 
 if __name__ == '__main__':
     mongodb = MongoDB()

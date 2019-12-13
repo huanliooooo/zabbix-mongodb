@@ -13,11 +13,15 @@
 git clone https://github.com/huanliooooo/zabbix-mongodb.git
 ```
 
-2. Config HostName and Server in /bin/zabbix.conf
+2. Config in /bin/zabbix.conf:
+   HOST_NAME=
+   SERVER=
+   MONGO_HOST=
+   MONGO_PORT=
 3. Test script:
 
 ```
-./bin/mongodb-stats.sh $SERVER $HOST_NAME
+./bin/mongodb-stats.sh
 ```
 
 4. Cronjob every 30 seconds
