@@ -76,7 +76,7 @@ class MongoDB(object):
         dict_metrics['key'] = 'mongodb.ismaster'
         if master:
             dict_metrics['value'] = 1
-            db_names = self.__conn.database_names()
+            db_names = self.__conn.list_database_names()
             self.__dbnames = db_names
         else:
             dict_metrics['value'] = 0
@@ -116,7 +116,7 @@ class MongoDB(object):
         # raise StopIteration as guided in
         # http://api.mongodb.com/python/current/api/pymongo/cursor.html
 
-        if op_first.count() > 0 and op_last.count() > 0:
+        if op_first.count_documents() > 0 and op_last.count_documents() > 0:
             op_fst = (op_first.next())['ts'].time
             op_last_st = op_last[0]['ts']
             op_lst = (op_last.next())['ts'].time
